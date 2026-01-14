@@ -1,0 +1,41 @@
+'use client';
+
+import type { Course } from '@/entities/course/model/types';
+import { useMemo, useState } from 'react';
+
+export function useCourseSelection(courses: Course[], initialSelectedIds: number[] = []) {
+  const [selectedIds, setSelectedIds] = useState<number[]>(initialSelectedIds);
+
+  const selectedSet = useMemo(() => new Set(selectedIds), [selectedIds]);
+
+  function toggle(id: number) {
+    setSelectedIds((prev) => {
+      if (prev.includes(id)) return prev.filter((x) => x !== id);
+      return [...prev, id];
+    });
+  }
+
+  function remove(id: number) {
+    setSelectedIds((prev) => prev.filter((x) => x !== id));
+  }
+
+  function clear() {
+    setSelectedIds([]);
+  }
+
+  const totalPrice = useMemo(() => {
+    if (selectedIds.length === 0) return 0;
+    const byId = new Map(courses.map((c) => [c.id, c]));
+    return selectedIds.reduce((sum, id) => sum + (byId.get(id)?.price ?? 0), 0);
+  }, [courses, selectedIds]);
+
+  return {
+    selectedIds,
+    selectedSet,
+    totalPrice,
+    toggle,
+    remove,
+    clear,
+  };
+}
+
