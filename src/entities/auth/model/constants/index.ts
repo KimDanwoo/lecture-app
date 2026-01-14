@@ -1,0 +1,1 @@
+export const AUTH_ROLES = { STUDENT: 'STUDENT', INSTRUCTOR: 'INSTRUCTOR' } as const;
