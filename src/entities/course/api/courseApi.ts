@@ -1,56 +1,12 @@
 import { COURSE_API_PATHS } from '@/entities/course/api';
-import type { Course, CourseListResponse, CourseSortOptions } from '@/entities/course/model';
+import type { CourseListResponse, CoursePage, GetCoursesParams } from '@/entities/course/model';
 import { COURSE_SORT_OPTIONS } from '@/entities/course/model/constants';
+import { getPageInfo, normalizeCourses } from '@/entities/course/model/utils';
 import { http } from '@/shared/api';
 
-export type GetCoursesParams = {
-  page?: number;
-  size?: number;
-  sort?: CourseSortOptions;
-};
-
-function normalizeCourses(res: CourseListResponse): Course[] {
-  if (Array.isArray(res)) return res;
-  return (res.content ?? res.items ?? res.data ?? res.courses ?? []) as Course[];
-}
-
-type PageInfo = { page: number; size: number; last: boolean };
-
-function coalesceNumber(...values: Array<number | null | undefined>) {
-  for (const v of values) {
-    if (typeof v === 'number' && Number.isFinite(v)) return v;
-  }
-  return undefined;
-}
-
-function getPageInfo(res: CourseListResponse): PageInfo {
-  if (Array.isArray(res)) {
-    return { page: 0, size: res.length, last: true };
-  }
-
-  const page = coalesceNumber(res.number, res.pageable?.pageNumber, res.page) ?? 0;
-  const size = coalesceNumber(res.size, res.pageable?.pageSize) ?? 10;
-
-  const last = Boolean(res.last ?? (typeof res.totalPages === 'number' ? page >= res.totalPages - 1 : undefined));
-
-  return { page, size, last };
-}
-
-export const courseQueryKeys = {
-  all: ['courses'] as const,
-  list: (params: GetCoursesParams) => [...courseQueryKeys.all, 'list', params] as const,
-  infinite: (params: { size: number; sort: NonNullable<GetCoursesParams['sort']> }) =>
-    [...courseQueryKeys.all, 'infinite', params] as const,
-};
-
-export type CoursePage = {
-  items: Course[];
-  page: number;
-  size: number;
-  hasNext: boolean;
-  nextPage?: number;
-};
-
+/**
+ * @description 강의 코스 API
+ */
 export const courseApi = {
   /**
    * @description 코스 목록 조회

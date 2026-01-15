@@ -4,6 +4,13 @@ import type { ButtonHTMLAttributes, PropsWithChildren } from 'react';
 
 type Props = PropsWithChildren<ButtonHTMLAttributes<HTMLButtonElement>>;
 
+/**
+ * @description 버튼
+ * @param className - 버튼 클래스
+ * @param disabled - 버튼 비활성화 여부
+ * @param props - 버튼 프로퍼티
+ * @returns 버튼
+ */
 export function Button({ className = '', disabled, ...props }: Props) {
   return (
     <button

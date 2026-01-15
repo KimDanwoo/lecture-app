@@ -14,6 +14,10 @@ type ShowInput = {
   bottomOffset?: number;
 };
 
+/**
+ * @description 스낵바
+ * @returns 스낵바
+ */
 export const snackbar = {
   show(input: ShowInput) {
     useSnackbarStore.getState().show(input);

@@ -11,6 +11,11 @@ type EnrollOutcome = {
 
 type SelectedCourseMap = Record<number, Course & { outcome?: EnrollOutcome }>;
 
+/**
+ * @description 선택된 강의 코스 맵
+ * @param input - 선택된 강의 코스 맵 파라미터
+ * @returns 선택된 강의 코스 맵
+ */
 export function useSelectedCourseMap(input: {
   courses: Course[];
   selectedIds: number[];

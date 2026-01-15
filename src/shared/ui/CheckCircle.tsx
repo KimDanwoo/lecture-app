@@ -7,6 +7,12 @@ type Props = {
   className?: string;
 };
 
+/**
+ * @description 체크 원
+ * @param checked - 체크 여부
+ * @param className - 체크 원 클래스
+ * @returns 체크 원
+ */
 export function CheckCircle({ checked, className = '' }: Props) {
   return (
     <span

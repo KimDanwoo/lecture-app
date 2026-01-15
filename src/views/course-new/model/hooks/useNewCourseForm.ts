@@ -10,6 +10,10 @@ import { useFormFields } from '@/shared/model/hooks';
 import { snackbar } from '@/shared/ui';
 import type { NewCourseFormValues } from '@/views/course-new/model/types';
 
+/**
+ * @description 새로운 강의 코스 등록
+ * @returns 새로운 강의 코스 등록 결과
+ */
 export function useNewCourseForm() {
   const router = useRouter();
   const { reportError } = useErrorReporter();

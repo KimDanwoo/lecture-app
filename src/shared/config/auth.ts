@@ -1,4 +1,5 @@
+// 인증 쿠키 이름
 export const auth = {
-  accessTokenCookieName: 'lecture_access_token',
-  roleCookieName: 'lecture_role',
+  accessTokenCookieName: 'ACCESS_TOKEN',
+  roleCookieName: 'ROLE',
 } as const;

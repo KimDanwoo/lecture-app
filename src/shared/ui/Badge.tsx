@@ -10,6 +10,13 @@ type Props = {
   className?: string;
 };
 
+/**
+ * @description 배지
+ * @param label - 배지 라벨
+ * @param variant - 배지 변종
+ * @param className - 배지 클래스
+ * @returns 배지
+ */
 export function Badge({ label, variant, className = '' }: Props) {
   const base = 'shrink-0 rounded-md px-2 py-0.5 text-[11px] font-semibold';
 
@@ -20,4 +27,3 @@ export function Badge({ label, variant, className = '' }: Props) {
 
   return <span className={cn(base, variantClass, className)}>{label}</span>;
 }
-

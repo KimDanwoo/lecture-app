@@ -6,6 +6,14 @@ type Props = SelectHTMLAttributes<HTMLSelectElement> & {
   label: string;
 };
 
+/**
+ * @description 셀렉트
+ * @param label - 셀렉트 라벨
+ * @param className - 셀렉트 클래스
+ * @param children - 셀렉트 하위 컴포넌트
+ * @param props - 셀렉트 프로퍼티
+ * @returns 셀렉트
+ */
 export function Select({ label, className = '', children, ...props }: Props) {
   return (
     <label className="grid gap-2">

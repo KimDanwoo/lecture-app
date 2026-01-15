@@ -4,6 +4,10 @@ import { auth } from '@/shared/config';
 import { AUTH_ROLES } from '@/shared/lib/auth/model/constants';
 import type { Role } from '@/shared/lib/auth/model/types';
 
+/**
+ * @description 쿠키에서 인증 정보 가져오기
+ * @returns 인증 정보
+ */
 export async function getAuthFromCookies(): Promise<{
   hasToken: boolean;
   role: Role | null;

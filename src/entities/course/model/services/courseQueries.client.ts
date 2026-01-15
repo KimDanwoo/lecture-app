@@ -2,10 +2,13 @@
 
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { courseApi, type CoursePage } from '@/entities/course/api';
-import type { CourseSort } from '@/entities/course/model';
+import { courseApi } from '@/entities/course/api';
+import type { CoursePage, CourseSort } from '@/entities/course/model';
 import { courseKeys } from '@/entities/course/model/services';
 
+/**
+ * @description 강의 코스 무한 스크롤 조회
+ */
 export function useInfiniteCourses(input: { size: number; sort: CourseSort }) {
   const { size, sort } = input;
 

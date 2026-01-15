@@ -15,6 +15,11 @@ type EnrollOutcome = {
   message?: string;
 };
 
+/**
+ * @description 선택된 강의 수강신청
+ * @param input - 선택된 강의 수강신청 파라미터
+ * @returns 선택된 강의 수강신청 결과
+ */
 export function useEnrollSelectedCourses(input: { role: Role | null; selectedIds: number[] }) {
   const { role, selectedIds } = input;
   const router = useRouter();
@@ -32,9 +37,9 @@ export function useEnrollSelectedCourses(input: { role: Role | null; selectedIds
     if (!role) {
       writePendingEnrollSelection(selectedIds);
 
-      const returnTo =
-        typeof window !== 'undefined' ? `${window.location.pathname}${window.location.search}` : ROUTES.HOME;
-      const qs = new URLSearchParams({ reason: 'enroll_required', returnTo });
+      const returnTo = typeof window !== 'undefined' ? `${window.location.pathname}${window.location.search}` : null;
+      const qs = new URLSearchParams({ reason: 'enroll_required' });
+      if (returnTo) qs.set('returnTo', returnTo);
       router.push(`${ROUTES.LOGIN}?${qs.toString()}`);
       return;
     }

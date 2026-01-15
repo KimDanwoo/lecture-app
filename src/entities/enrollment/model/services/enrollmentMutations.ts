@@ -3,6 +3,9 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { courseKeys } from '@/entities/course/model/services';
 import { enrollmentApi } from '@/entities/enrollment/api';
 
+/**
+ * @description 수강신청 배치
+ */
 export function useEnrollBatchMutation() {
   const queryClient = useQueryClient();
   return useMutation({

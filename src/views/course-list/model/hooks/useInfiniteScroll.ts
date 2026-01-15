@@ -4,6 +4,11 @@ import { useEffect } from 'react';
 
 const DEFAULT_INFINITE_SCROLL_ROOT_MARGIN = '200px';
 
+/**
+ * @description 무한 스크롤
+ * @param input - 무한 스크롤 파라미터
+ * @returns void
+ */
 export function useInfiniteScroll(input: {
   sentinelRef: React.RefObject<HTMLDivElement | null>;
   enabled: boolean;

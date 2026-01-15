@@ -1,21 +1,13 @@
 import { QueryClient } from '@tanstack/react-query';
 
-import type { CoursePage } from '@/entities/course/api';
-import type { Course, CourseListResponse, CourseSort } from '@/entities/course/model';
+import type { CourseListResponse, CoursePage, CourseSort } from '@/entities/course/model';
 import { courseKeys } from '@/entities/course/model/services';
 
-function normalizeCourses(res: CourseListResponse): Course[] {
-  if (Array.isArray(res)) return res;
-  return (res.content ?? res.items ?? res.data ?? res.courses ?? []) as Course[];
-}
+import { getPageInfo, normalizeCourses } from '../utils';
 
-function getPageInfo(res: CourseListResponse) {
-  if (Array.isArray(res)) return { page: 0, last: true };
-  const page = res.number ?? res.pageable?.pageNumber ?? res.page ?? 0;
-  const last = res.last ?? (typeof res.totalPages === 'number' ? page >= res.totalPages - 1 : undefined);
-  return { page, last: Boolean(last) };
-}
-
+/**
+ * @description 강의 코스 목록 조회 (BFF)
+ */
 async function fetchCoursesPageViaBff(args: {
   origin: string;
   cookie?: string;
@@ -46,6 +38,9 @@ async function fetchCoursesPageViaBff(args: {
   return { items, page: info.page, size: args.size, hasNext, nextPage: hasNext ? info.page + 1 : undefined };
 }
 
+/**
+ * @description 강의 코스 무한 스크롤 조회 (BFF)
+ */
 export async function prefetchInfiniteCoursesBff(args: {
   queryClient: QueryClient;
   origin: string;

@@ -12,6 +12,10 @@ import { useFormFields } from '@/shared/model/hooks';
 import { snackbar } from '@/shared/ui';
 import type { SignupFormValues } from '@/views/signup/model/types';
 
+/**
+ * @description 회원가입 폼
+ * @returns 회원가입 결과
+ */
 export function useSignupForm() {
   const router = useRouter();
   const { reportError } = useErrorReporter();

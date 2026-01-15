@@ -4,6 +4,12 @@ import { useMemo, useState } from 'react';
 
 import type { Course } from '@/entities/course/model';
 
+/**
+ * @description 강의 선택
+ * @param courses - 강의 목록
+ * @param initialSelectedIds - 초기 선택된 강의 ID 목록
+ * @returns 강의 선택 결과
+ */
 export function useCourseSelection(courses: Course[], initialSelectedIds: number[] = []) {
   const [selectedIds, setSelectedIds] = useState<number[]>(initialSelectedIds);
 

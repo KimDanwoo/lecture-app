@@ -11,6 +11,16 @@ type Props = {
   className?: string;
 };
 
+/**
+ * @description 세그먼트 버튼
+ * @param label - 세그먼트 버튼 라벨
+ * @param selected - 세그먼트 버튼 선택 여부
+ * @param onPressAction - 세그먼트 버튼 클릭 액션
+ * @param disabled - 세그먼트 버튼 비활성화 여부
+ * @param size - 세그먼트 버튼 크기
+ * @param className - 세그먼트 버튼 클래스
+ * @returns 세그먼트 버튼
+ */
 export function SegmentButton({ label, selected, onPressAction, disabled, size = 'sm', className = '' }: Props) {
   const base =
     size === 'md'

@@ -6,6 +6,13 @@ type Props = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
 };
 
+/**
+ * @description 인풋
+ * @param label - 인풋 라벨
+ * @param className - 인풋 클래스
+ * @param props - 인풋 프로퍼티
+ * @returns 인풋
+ */
 export function Input({ label, className = '', ...props }: Props) {
   return (
     <label className="grid gap-2">

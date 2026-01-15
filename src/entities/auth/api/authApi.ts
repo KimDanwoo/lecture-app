@@ -14,15 +14,21 @@ export type LoginResponse = {
   };
 };
 
+/**
+ * @description 인증 API
+ */
 export const authApi = Object.freeze({
+  // 로그아웃
   logout() {
     return http.post<{ ok: boolean }>(AUTH_API_PATHS.LOGOUT);
   },
 
+  // 로그인
   login(body: { email: string; password: string }) {
     return http.post<LoginResponse>(AUTH_API_PATHS.LOGIN, body);
   },
 
+  // 회원가입
   signup(body: {
     email: string;
     password: string;

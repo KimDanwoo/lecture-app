@@ -10,6 +10,10 @@ import { useErrorReporter } from '@/shared/lib/error';
 import { snackbar } from '@/shared/ui';
 import type { LoginFormValues } from '@/views/login/model/types';
 
+/**
+ * @description 로그인 폼
+ * @returns 로그인 결과
+ */
 export function useLoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();

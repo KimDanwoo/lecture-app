@@ -2,6 +2,11 @@
 
 import { useEffect } from 'react';
 
+/**
+ * @description 선택된 강의 코스 제거
+ * @param input - 선택된 강의 코스 제거 파라미터
+ * @returns void
+ */
 export function usePruneSelectionForFullCourses(input: {
   selectedIds: number[];
   fullCourseIdSet: Set<number>;

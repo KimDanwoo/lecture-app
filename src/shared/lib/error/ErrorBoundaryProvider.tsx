@@ -70,6 +70,11 @@ class GlobalErrorBoundary extends React.Component<
   }
 }
 
+/**
+ * @description 에러 바운더리 제공자
+ * @param props - 에러 바운더리 제공자 파라미터
+ * @returns 에러 바운더리 제공자
+ */
 export function ErrorBoundaryProvider(props: { children: React.ReactNode }) {
   const value = React.useMemo<ErrorReportContextValue>(
     () => ({

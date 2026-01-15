@@ -6,6 +6,11 @@ import type { Course, CourseSort } from '@/entities/course/model';
 import { useInfiniteCourses } from '@/entities/course/model/services';
 import { dedupeCoursesById } from '@/views/course-list/model/utils';
 
+/**
+ * @description 강의 목록
+ * @param input - 강의 목록 조회 파라미터
+ * @returns 강의 목록 조회 결과
+ */
 export function useCourseList(input: { sort: CourseSort; size: number }) {
   const { sort, size } = input;
 

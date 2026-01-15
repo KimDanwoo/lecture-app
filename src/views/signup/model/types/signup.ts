@@ -1,5 +1,9 @@
 import type { Role } from '@/shared/lib/auth';
 
+/**
+ * @description 회원가입 폼 값
+ * @returns 회원가입 폼 값
+ */
 export type SignupFormValues = {
   role: Role;
   email: string;
@@ -8,4 +12,3 @@ export type SignupFormValues = {
   name: string;
   phone: string;
 };
-
