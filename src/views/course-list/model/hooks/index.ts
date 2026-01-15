@@ -1,5 +1,4 @@
-export { useCourseListQuery } from './useCourseListQuery';
-export { useInfiniteScroll } from './useInfiniteScroll';
-export { useCourseSelection } from './useCourseSelection';
-export { useEnrollSelectedCourses } from './useEnrollSelectedCourses';
-
+export * from './useCourseList';
+export * from './useCourseSelection';
+export * from './useEnrollSelectedCourses';
+export * from './useInfiniteScroll';

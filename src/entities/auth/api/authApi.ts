@@ -1,6 +1,6 @@
-import { AUTH_ROLES } from '@/entities/auth/model/constants';
-import { AUTH_API_PATHS } from '@/features/auth/api';
-import { http } from '@/shared/api/http';
+import { AUTH_API_PATHS } from '@/entities/auth/api';
+import { http } from '@/shared/api';
+import { AUTH_ROLES } from '@/shared/lib/auth/model/constants';
 
 export type LoginResponse = {
   accessToken: string;

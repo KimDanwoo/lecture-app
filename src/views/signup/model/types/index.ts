@@ -1,2 +1,1 @@
-export type { SignupFormValues } from './signup';
-
+export * from './signup';

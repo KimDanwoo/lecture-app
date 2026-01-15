@@ -1,4 +1,3 @@
 export const enrollmentPaths = {
-	batch: '/api/enrollments/batch',
+  batch: '/api/enrollments/batch',
 } as const;
-

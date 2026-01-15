@@ -1,7 +1,8 @@
 'use client';
 
-import { snackbar } from '@/shared/ui/snackbar';
 import React from 'react';
+
+import { snackbar } from '@/shared/ui';
 
 type ReportErrorInput =
   | string
@@ -22,8 +23,13 @@ const ErrorReportContext = React.createContext<ErrorReportContextValue | null>(n
 
 function toMessage(err: ReportErrorInput) {
   if (typeof err === 'string') return err;
-  if (err && typeof err === 'object' && 'message' in err && typeof (err as any).message === 'string') {
-    return String((err as any).message);
+  if (
+    err &&
+    typeof err === 'object' &&
+    'message' in err &&
+    typeof (err as Record<string, unknown>).message === 'string'
+  ) {
+    return String((err as Record<string, unknown>).message);
   }
   if (err instanceof Error) return err.message || '알 수 없는 오류가 발생했습니다.';
   return '알 수 없는 오류가 발생했습니다.';

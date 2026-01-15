@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+
 import { auth } from '@/shared/config/auth';
 
 export async function POST() {

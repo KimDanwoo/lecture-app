@@ -1,9 +1,10 @@
 'use client';
 
-import { ErrorBoundaryProvider } from '@/shared/lib/error';
-import { SnackbarHost } from '@/shared/ui';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState } from 'react';
+
+import { ErrorBoundaryProvider } from '@/shared/lib/error';
+import { Snackbar } from '@/shared/ui/snackbar';
 
 export function CombineProvider({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(
@@ -22,7 +23,7 @@ export function CombineProvider({ children }: { children: React.ReactNode }) {
     <ErrorBoundaryProvider>
       <QueryClientProvider client={queryClient}>
         {children}
-        <SnackbarHost />
+        <Snackbar />
       </QueryClientProvider>
     </ErrorBoundaryProvider>
   );

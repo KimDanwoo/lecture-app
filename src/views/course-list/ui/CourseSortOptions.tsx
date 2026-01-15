@@ -1,9 +1,10 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { SegmentButton } from '@/shared/ui';
 import { COURSE_LIST_SORT_OPTIONS } from '@/views/course-list/model/constants';
 import { type CourseListSort } from '@/views/course-list/model/types';
-import { useRouter } from 'next/navigation';
 
 type Props = {
   currentSort: CourseListSort;
@@ -19,7 +20,7 @@ export function CourseSortOptions({ currentSort }: Props) {
           key={item.value}
           label={item.label}
           selected={item.value === currentSort}
-          onPress={() => router.push(`/?sort=${item.value}`)}
+          onPressAction={() => router.push(`/?sort=${item.value}`)}
         />
       ))}
     </div>

@@ -1,11 +1,12 @@
 'use client';
 
-import { useInfiniteCourses, type CourseSort } from '@/entities/course/model/hooks';
-import type { Course } from '@/entities/course/model/types';
-import { dedupeCoursesById } from '@/views/course-list/model/utils';
 import { useMemo } from 'react';
 
-export function useCourseListQuery(input: { sort: CourseSort; size: number }) {
+import type { Course, CourseSort } from '@/entities/course/model';
+import { useInfiniteCourses } from '@/entities/course/model/services';
+import { dedupeCoursesById } from '@/views/course-list/model/utils';
+
+export function useCourseList(input: { sort: CourseSort; size: number }) {
   const { sort, size } = input;
 
   const query = useInfiniteCourses({ size, sort });
@@ -27,4 +28,3 @@ export function useCourseListQuery(input: { sort: CourseSort; size: number }) {
     fetchNextPage: query.fetchNextPage,
   };
 }
-

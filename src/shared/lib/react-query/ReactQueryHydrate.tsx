@@ -1,9 +1,8 @@
 'use client';
 
-import type { DehydratedState } from '@tanstack/react-query';
-import { HydrationBoundary } from '@tanstack/react-query';
+import { HydrationBoundary, type DehydratedState } from '@tanstack/react-query';
+import type { ReactNode } from 'react';
 
-export function ReactQueryHydrate({ state, children }: { state: DehydratedState; children: React.ReactNode }) {
-	return <HydrationBoundary state={state}>{children}</HydrationBoundary>;
+export function ReactQueryHydrate({ state, children }: { state: DehydratedState; children: ReactNode }) {
+  return <HydrationBoundary state={state}>{children}</HydrationBoundary>;
 }
-

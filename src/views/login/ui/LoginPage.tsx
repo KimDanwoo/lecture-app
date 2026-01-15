@@ -1,9 +1,11 @@
 'use client';
 
-import { Button, Input } from '@/shared/ui';
-import { useLoginForm } from '@/views/login/model/hooks';
 import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
+
+import { cn } from '@/shared/lib/classnames';
+import { Button, Input, Spacing } from '@/shared/ui';
+import { useLoginForm } from '@/views/login/model/hooks';
 
 export function LoginPage() {
   const { values, setField, onSubmit, isPending } = useLoginForm();
@@ -15,12 +17,20 @@ export function LoginPage() {
   return (
     <section className="mx-auto w-full max-w-md" aria-label="로그인 폼">
       {showEnrollRequired ? (
-        <div className="mb-4 rounded-xl border border-black/10 bg-white p-4 text-sm text-zinc-700 dark:border-white/15 dark:bg-black dark:text-zinc-300">
+        <div
+          className={cn(
+            'mb-4 rounded-x p-4 text-sm text-zinc-700 dark:text-zinc-300 ',
+            'border border-black/10 dark:border-white/15',
+            'bg-white dark:bg-black',
+          )}
+        >
           수강 신청을 하려면 <b>로그인</b>이 필요합니다.
         </div>
       ) : null}
-      <form onSubmit={onSubmit} className="grid gap-4">
-        <Input
+
+      <form onSubmit={onSubmit} className="h-full flex flex-col">
+        <div className="flex-1">
+          <Input
             label="이메일"
             type="email"
             value={values.email}
@@ -28,7 +38,10 @@ export function LoginPage() {
             placeholder="user@example.com"
             required
           />
-        <Input
+
+          <Spacing size={30} />
+
+          <Input
             label="비밀번호"
             type="password"
             value={values.password}
@@ -36,6 +49,9 @@ export function LoginPage() {
             placeholder="Test1234"
             required
           />
+        </div>
+
+        <Spacing size={60} />
 
         <Button type="submit" disabled={isPending}>
           {isPending ? '처리 중...' : '로그인'}

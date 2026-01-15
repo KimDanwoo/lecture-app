@@ -25,6 +25,12 @@ async function safeParseJson(res: Response) {
 }
 
 export const http = {
+  /**
+   * @description 모든 요청에 대해 응답 형식을 통일하기 위함 (예외처리 코드 공통화-> 클라이언트에서 예외처리 코드 처리 가능)
+   * @param path - 요청 경로
+   * @param init - 요청 초기화 옵션
+   * @returns 응답 데이터
+   */
   async fetchJson<T>(
     path: string,
     init?: RequestInit & { accessToken?: string },

@@ -1,5 +1,7 @@
 import { COURSE_SORT_OPTIONS } from '@/entities/course/model/constants';
-import { CourseSortOptions } from '@/entities/course/model/types';
+import type { CourseSortOptions } from '@/entities/course/model';
+
+export type CourseListSort = CourseSortOptions;
 
 export function toCourseListSort(value: string | undefined): CourseSortOptions {
   if (

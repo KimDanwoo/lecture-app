@@ -1,2 +1,1 @@
-export { ErrorBoundaryProvider, useErrorReporter } from './ErrorBoundaryProvider';
-
+export * from './ErrorBoundaryProvider';

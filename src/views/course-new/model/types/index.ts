@@ -1,2 +1,1 @@
-export type { NewCourseFormValues } from './newCourse';
-
+export * from './newCourse';

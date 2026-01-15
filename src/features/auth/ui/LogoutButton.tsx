@@ -1,8 +1,9 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
-import { Button } from "@/shared/ui";
+import { useRouter } from 'next/navigation';
+
 import { useLogoutMutation } from '@/features/auth/model/services';
+import { Button } from '@/shared/ui';
 
 export function LogoutButton() {
   const router = useRouter();
@@ -10,7 +11,7 @@ export function LogoutButton() {
 
   async function onLogout() {
     await logoutMutation.mutateAsync().catch(() => undefined);
-    router.push("/");
+    router.push('/');
     router.refresh();
   }
 
@@ -20,4 +21,3 @@ export function LogoutButton() {
     </Button>
   );
 }
-

@@ -1,6 +1,15 @@
 import { NextResponse } from 'next/server';
+
+import { http } from '@/shared/api/http';
 import { auth } from '@/shared/config/auth';
-import { backendProxyJson } from '@/shared/api/backendProxyJson';
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? '';
+
+function joinUrl(baseUrl: string, path: string) {
+  const trimmedBase = baseUrl.replace(/\/+$/, '');
+  const trimmedPath = path.replace(/^\/+/, '');
+  return `${trimmedBase}/${trimmedPath}`;
+}
 
 type LoginResponse = {
   accessToken?: string;
@@ -18,7 +27,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    const { status, data } = await backendProxyJson('/users/login', {
+    const { status, data } = await http.fetchJson<unknown>(joinUrl(BASE_URL, '/users/login'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify(body),

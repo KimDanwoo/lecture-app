@@ -1,2 +1,1 @@
-export { useNewCourseForm } from './useNewCourseForm';
-
+export * from './useNewCourseForm';

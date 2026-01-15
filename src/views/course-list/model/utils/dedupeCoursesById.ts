@@ -1,4 +1,4 @@
-import type { Course } from '@/entities/course/model/types';
+import type { Course } from '@/entities/course/model';
 
 export function dedupeCoursesById(items: Course[]) {
   if (items.length <= 1) return items;

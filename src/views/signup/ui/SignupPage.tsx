@@ -1,8 +1,8 @@
 'use client';
 
-import { AUTH_ROLES } from '@/entities/auth/model/constants';
-import type { Role } from '@/shared/lib/auth';
-import { Button, Input, Select } from '@/shared/ui';
+import { AUTH_ROLES } from '@/shared/lib/auth/model/constants';
+import type { Role } from '@/shared/lib/auth/model/types';
+import { Button, Input, Select, Spacing } from '@/shared/ui';
 import { useSignupForm } from '@/views/signup/model/hooks';
 
 export function SignupPage() {
@@ -16,6 +16,8 @@ export function SignupPage() {
           <option value="INSTRUCTOR">{AUTH_ROLES.INSTRUCTOR} (강사)</option>
         </Select>
 
+        <Spacing size={12} />
+
         <Input
           label="이메일"
           type="email"
@@ -24,6 +26,8 @@ export function SignupPage() {
           placeholder="user@example.com"
           required
         />
+
+        <Spacing size={12} />
 
         <Input
           label="비밀번호"
@@ -34,6 +38,8 @@ export function SignupPage() {
           required
         />
 
+        <Spacing size={12} />
+
         <Input
           label="비밀번호 확인"
           type="password"
@@ -43,6 +49,8 @@ export function SignupPage() {
           required
         />
 
+        <Spacing size={12} />
+
         <Input
           label="이름"
           value={values.name}
@@ -51,6 +59,8 @@ export function SignupPage() {
           required
         />
 
+        <Spacing size={12} />
+
         <Input
           label="휴대폰 번호"
           value={values.phone}
@@ -58,6 +68,8 @@ export function SignupPage() {
           placeholder="010-1234-5678"
           required
         />
+
+        <Spacing size={30} />
 
         <Button type="submit" disabled={isPending}>
           {isPending ? '처리 중...' : '회원가입'}

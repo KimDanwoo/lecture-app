@@ -1,7 +1,10 @@
 'use client';
 
+import { CSSProperties } from 'react';
+
 import { useSnackbarController } from '@/shared/model/hooks';
 import { useSnackbarStore, type SnackbarVariant } from '@/shared/model/store';
+
 import Styles from './SnackbarHost.module.scss';
 
 function variantClass(variant: SnackbarVariant) {
@@ -36,7 +39,7 @@ export function SnackbarHost() {
       className={Styles.snackbarHost}
       style={
         effectiveBottomOffset > 0
-          ? ({ ['--snackbar-bottom-offset' as any]: `${effectiveBottomOffset}px` } as any)
+          ? ({ ['--snackbar-bottom-offset' as keyof CSSProperties]: `${effectiveBottomOffset}px` } as CSSProperties)
           : undefined
       }
     >

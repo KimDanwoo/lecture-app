@@ -1,8 +1,10 @@
-import { AUTH_ROLES } from '@/entities/auth/model/constants';
-import { auth } from '@/shared/config/auth';
-import { NewCourseForm } from '@/views/course-new/ui/NewCourseForm';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
+
+import { auth } from '@/shared/config';
+import { AUTH_ROLES } from '@/shared/lib/auth/model/constants';
+import { cn } from '@/shared/lib/classnames';
+import { NewCourseForm } from '@/views/course-new/ui';
 
 export async function CourseNewView() {
   const cookieStore = await cookies();
@@ -11,7 +13,12 @@ export async function CourseNewView() {
   if (role !== AUTH_ROLES.INSTRUCTOR) {
     return (
       <section className="mx-auto w-full max-w-md" aria-label="강의 등록 권한 안내">
-        <div className="rounded-xl border border-black/10 bg-white p-6 text-sm text-zinc-700 dark:border-white/15 dark:bg-black dark:text-zinc-300">
+        <div
+          className={cn(
+            'rounded-xl border p-6 text-sm',
+            'border-black/10 bg-white text-zinc-700 dark:border-white/15 dark:bg-black dark:text-zinc-300',
+          )}
+        >
           강의 등록은 <b>강사(INSTRUCTOR)</b>만 가능합니다.
         </div>
         <div className="mt-4 flex gap-2">

@@ -1,3 +1,1 @@
-export * from './getAuthFromCookies';
-export type * from './types';
-
+export * from './model/types';

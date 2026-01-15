@@ -1,15 +1,16 @@
 'use client';
 
-import { useSignupMutation } from '@/features/auth/model/services';
-import { HttpError } from '@/shared/api/http';
-import type { Role } from '@/shared/lib/auth';
-import { useErrorReporter } from '@/shared/lib/error';
-import { snackbar } from '@/shared/ui';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import type { SignupFormValues } from '@/views/signup/model/types';
-import { AUTH_ROLES } from '@/entities/auth/model/constants';
+
+import { useSignupMutation } from '@/features/auth/model/services';
+import { HttpError } from '@/shared/api';
 import { ROUTES } from '@/shared/config';
+import { AUTH_ROLES } from '@/shared/lib/auth/model/constants';
+import type { Role } from '@/shared/lib/auth/model/types';
+import { useErrorReporter } from '@/shared/lib/error';
+import { snackbar } from '@/shared/ui';
+import type { SignupFormValues } from '@/views/signup/model/types';
 
 export function useSignupForm() {
   const router = useRouter();
@@ -68,4 +69,3 @@ export function useSignupForm() {
     isPending: signupMutation.isPending,
   };
 }
-

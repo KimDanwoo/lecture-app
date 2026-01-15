@@ -1,3 +1,2 @@
-export { formatPrice } from './formatPrice';
-export { dedupeCoursesById } from './dedupeCoursesById';
-
+export * from './dedupeCoursesById';
+export * from './formatPrice';

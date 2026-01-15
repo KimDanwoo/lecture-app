@@ -1,8 +1,10 @@
 'use client';
 
+import { useMemo, useState } from 'react';
+
+import { cn } from '@/shared/lib/classnames';
 import { Badge, Button } from '@/shared/ui';
 import { formatPrice } from '@/views/course-list/model/utils';
-import { useMemo, useState } from 'react';
 
 type SelectedCourse = {
   id: number;
@@ -44,9 +46,10 @@ export function CourseCheckoutBar({
 }: Props) {
   const [expanded, setExpanded] = useState(false);
 
-  const selectedCourses = useMemo(() => {
-    return selectedOrder.map((id) => selectedCourseMap[id]).filter(Boolean);
-  }, [selectedCourseMap, selectedOrder]);
+  const selectedCourses = useMemo(
+    () => selectedOrder.map((id) => selectedCourseMap[id]).filter(Boolean),
+    [selectedCourseMap, selectedOrder],
+  );
 
   const selectionSummary = useMemo(() => {
     if (selectedCount === 0) return null;
@@ -60,13 +63,24 @@ export function CourseCheckoutBar({
   const helpMessage = selectedCount === 0 ? '강의를 체크해서 선택한 뒤 수강 신청을 눌러주세요.' : selectionSummary;
 
   return (
-    <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 bg-zinc-50/95 pb-safe backdrop-blur-sm dark:bg-black/80">
-      <div className="mx-auto w-full max-w-3xl px-4 py-3 sm:px-6 sm:py-4">
-        <div className="pointer-events-auto rounded-2xl border border-black/10 bg-white p-3 shadow-sm dark:border-white/15 dark:bg-black sm:p-4">
+    <div
+      className={cn(
+        'pointer-events-none fixed inset-x-0 bottom-0 z-40',
+        'bg-zinc-50/95 pb-safe backdrop-blur-sm dark:bg-black/80',
+      )}
+    >
+      <div className="w-full px-4 py-3 sm:px-6 sm:py-4">
+        <div
+          className={cn(
+            'pointer-events-auto rounded-2xl ',
+            'border border-black/10 bg-white p-3 shadow-sm dark:border-white/15 dark:bg-black sm:p-4',
+          )}
+        >
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between gap-3">
-              <div className="text-sm font-semibold text-zinc-950 dark:text-zinc-50">
-                총 금액: {formatPrice(totalPrice)}원
+              <div className="flex-1 text-sm font-semibold text-zinc-950 dark:text-zinc-50">
+                <span className="block">총 금액</span>
+                <span className="block text-base sm:text-lg">{formatPrice(totalPrice)}원</span>
               </div>
               {selectedCount > 0 ? (
                 <button
@@ -76,7 +90,10 @@ export function CourseCheckoutBar({
                     onClearSelectionAction();
                     onClearFeedbackAction();
                   }}
-                  className="shrink-0 rounded-lg px-2 py-1 text-xs font-medium text-zinc-700 hover:bg-black/5 dark:text-zinc-200 dark:hover:bg-white/10"
+                  className={cn(
+                    'shrink-0 rounded-lg px-2 py-1 text-xs font-medium',
+                    'text-zinc-700 hover:bg-black/5 dark:text-zinc-200 dark:hover:bg-white/10',
+                  )}
                   aria-label="선택한 강의 초기화"
                 >
                   초기화
@@ -102,17 +119,20 @@ export function CourseCheckoutBar({
             {selectedCount > 0 && expanded ? (
               <div
                 id="checkout-selected-courses"
-                className="grid max-h-40 gap-2 overflow-auto rounded-xl border border-black/5 bg-zinc-50 p-3 text-xs text-zinc-700 dark:border-white/10 dark:bg-white/5 dark:text-zinc-200"
+                className={cn(
+                  'grid max-h-40 gap-2 overflow-auto rounded-xl',
+                  'bg-zinc-50 p-3 text-xs text-zinc-700 dark:bg-white/5 dark:text-zinc-200',
+                  'border border-black/5 dark:border-white/10',
+                )}
               >
                 {selectedCourses.map((c) => {
                   const outcome = c.outcome;
-
-                  const badge =
-                    outcome?.status === 'success' ? (
-                      <Badge label="성공" variant="primary" />
-                    ) : outcome?.status === 'error' ? (
-                      <Badge label="실패" variant="error" />
-                    ) : null;
+                  let badge = null;
+                  if (outcome?.status === 'success') {
+                    badge = <Badge label="성공" variant="primary" />;
+                  } else if (outcome?.status === 'error') {
+                    badge = <Badge label="실패" variant="error" />;
+                  }
 
                   return (
                     <div key={c.id} className="flex flex-col gap-1">
@@ -131,7 +151,10 @@ export function CourseCheckoutBar({
                           <button
                             type="button"
                             onClick={() => onRemoveCourseAction(c.id)}
-                            className="rounded-md px-1.5 py-1 text-[11px] font-semibold text-zinc-700 hover:bg-black/5 dark:text-zinc-200 dark:hover:bg-white/10"
+                            className={cn(
+                              'rounded-md px-1.5 py-1 text-[11px] font-semibold',
+                              'text-zinc-700 hover:bg-black/5 dark:text-zinc-200 dark:hover:bg-white/10',
+                            )}
                             aria-label={`${c.title} 선택 해제`}
                           >
                             X
@@ -144,11 +167,9 @@ export function CourseCheckoutBar({
               </div>
             ) : null}
 
-            {/* 버튼은 항상 최하단에 위치 */}
             <Button
               type="button"
               onClick={() => {
-                // 제출하면 결과가 바로 보이도록 펼쳐둡니다.
                 setExpanded(true);
                 onEnrollAction();
               }}

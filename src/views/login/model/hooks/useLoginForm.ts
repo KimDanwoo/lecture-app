@@ -1,12 +1,13 @@
 'use client';
 
-import { useLoginMutation } from '@/features/auth/model/services';
-import { HttpError } from '@/shared/api/http';
-import { ROUTES } from '@/shared/config/routes';
-import { useErrorReporter } from '@/shared/lib/error';
-import { snackbar } from '@/shared/ui';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
+
+import { useLoginMutation } from '@/features/auth/model/services';
+import { HttpError } from '@/shared/api';
+import { ROUTES } from '@/shared/config';
+import { useErrorReporter } from '@/shared/lib/error';
+import { snackbar } from '@/shared/ui';
 import type { LoginFormValues } from '@/views/login/model/types';
 
 export function useLoginForm() {
@@ -45,4 +46,3 @@ export function useLoginForm() {
     isPending: loginMutation.isPending,
   };
 }
-

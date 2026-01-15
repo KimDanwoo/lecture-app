@@ -5,13 +5,13 @@ import type { ReactNode } from 'react';
 type Props = {
   label: ReactNode;
   selected: boolean;
-  onPress: () => void;
+  onPressAction: () => void;
   disabled?: boolean;
   size?: 'sm' | 'md';
   className?: string;
 };
 
-export function SegmentButton({ label, selected, onPress, disabled, size = 'sm', className = '' }: Props) {
+export function SegmentButton({ label, selected, onPressAction, disabled, size = 'sm', className = '' }: Props) {
   const base =
     size === 'md'
       ? 'rounded-full px-3 py-1.5 text-sm font-semibold'
@@ -23,15 +23,11 @@ export function SegmentButton({ label, selected, onPress, disabled, size = 'sm',
       role="tab"
       aria-selected={selected}
       disabled={disabled}
-      onClick={onPress}
+      onClick={onPressAction}
       className={[
         base,
-        selected
-          ? 'bg-zinc-950 text-white dark:bg-zinc-50 dark:text-zinc-950'
-          : [
-              'bg-white text-zinc-800 ring-1 ring-black/10 hover:bg-zinc-50',
-              'dark:bg-black dark:text-zinc-200 dark:ring-white/15 dark:hover:bg-zinc-900',
-            ].join(' '),
+        selected ? 'bg-zinc-950 text-white' : 'bg-white text-zinc-800 ring-1 ring-black/10 hover:bg-zinc-50',
+        'dark:bg-black dark:text-zinc-200 dark:ring-white/15 dark:hover:bg-zinc-900',
         disabled ? 'opacity-50' : '',
         className,
       ].join(' ')}
@@ -40,4 +36,3 @@ export function SegmentButton({ label, selected, onPress, disabled, size = 'sm',
     </button>
   );
 }
-

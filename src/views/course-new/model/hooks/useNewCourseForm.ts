@@ -1,13 +1,13 @@
 'use client';
 
-import { useCreateCourseMutation } from '@/entities/course/model/hooks';
-import { useUserStore } from '@/features/auth/model/store';
-import type { UserInfo } from '@/features/auth/model/store';
-import { HttpError } from '@/shared/api/http';
-import { useErrorReporter } from '@/shared/lib/error';
-import { snackbar } from '@/shared/ui';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+
+import { useCreateCourseMutation } from '@/entities/course/model/services';
+import { useUserStore, type UserInfo } from '@/features/auth/model/store';
+import { HttpError } from '@/shared/api';
+import { useErrorReporter } from '@/shared/lib/error';
+import { snackbar } from '@/shared/ui';
 import type { NewCourseFormValues } from '@/views/course-new/model/types';
 
 export function useNewCourseForm() {
@@ -62,4 +62,3 @@ export function useNewCourseForm() {
     isPending: createCourseMutation.isPending,
   };
 }
-

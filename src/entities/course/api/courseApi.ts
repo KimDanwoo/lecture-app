@@ -1,7 +1,7 @@
 import { COURSE_API_PATHS } from '@/entities/course/api';
-import type { Course, CourseListResponse, CourseSortOptions } from '@/entities/course/model/types';
-import { http } from '@/shared/api/http';
-import { COURSE_SORT_OPTIONS } from '../model/constants';
+import type { Course, CourseListResponse, CourseSortOptions } from '@/entities/course/model';
+import { COURSE_SORT_OPTIONS } from '@/entities/course/model/constants';
+import { http } from '@/shared/api';
 
 export type GetCoursesParams = {
   page?: number;
@@ -31,8 +31,7 @@ function getPageInfo(res: CourseListResponse): PageInfo {
   const page = coalesceNumber(res.number, res.pageable?.pageNumber, res.page) ?? 0;
   const size = coalesceNumber(res.size, res.pageable?.pageSize) ?? 10;
 
-  const last =
-    typeof res.last === 'boolean' ? res.last : typeof res.totalPages === 'number' ? page >= res.totalPages - 1 : false;
+  const last = Boolean(res.last ?? (typeof res.totalPages === 'number' ? page >= res.totalPages - 1 : undefined));
 
   return { page, size, last };
 }
@@ -53,6 +52,11 @@ export type CoursePage = {
 };
 
 export const courseApi = {
+  /**
+   * @description 코스 목록 조회
+   * @param params - 조회 파라미터
+   * @returns 코스 목록
+   */
   async getCourses(params: GetCoursesParams = {}) {
     const page = params.page ?? 0;
     const size = params.size ?? 10;
@@ -71,6 +75,11 @@ export const courseApi = {
     return normalizeCourses(res);
   },
 
+  /**
+   * @description 코스 목록 페이지 조회
+   * @param params - 조회 파라미터
+   * @returns 코스 목록 페이지
+   */
   async getCoursesPage(params: GetCoursesParams = {}): Promise<CoursePage> {
     const page = params.page ?? 0;
     const size = params.size ?? 10;
@@ -99,6 +108,11 @@ export const courseApi = {
     };
   },
 
+  /**
+   * @description 코스 생성
+   * @param body - 코스 생성 요청 바디
+   * @returns 코스 생성 결과
+   */
   createCourse(body: {
     title: string;
     description?: string;

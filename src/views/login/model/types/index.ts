@@ -1,2 +1,1 @@
-export type { LoginFormValues } from './login';
-
+export * from './login';

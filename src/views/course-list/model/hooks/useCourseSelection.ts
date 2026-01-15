@@ -1,7 +1,8 @@
 'use client';
 
-import type { Course } from '@/entities/course/model/types';
 import { useMemo, useState } from 'react';
+
+import type { Course } from '@/entities/course/model';
 
 export function useCourseSelection(courses: Course[], initialSelectedIds: number[] = []) {
   const [selectedIds, setSelectedIds] = useState<number[]>(initialSelectedIds);
@@ -38,4 +39,3 @@ export function useCourseSelection(courses: Course[], initialSelectedIds: number
     clear,
   };
 }
-

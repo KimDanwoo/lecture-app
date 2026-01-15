@@ -1,2 +1,2 @@
-export { CourseNewView } from './CourseNewView';
-
+export * from './CourseNewView';
+export * from './ui';

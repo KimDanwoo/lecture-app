@@ -1,8 +1,9 @@
 'use client';
 
-import { Role } from '@/shared/lib/auth';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
+
+import type { Role } from '@/shared/lib/auth/model/types';
 
 export type UserInfo = {
   id: number;

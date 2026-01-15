@@ -1,21 +1,19 @@
 'use client';
 
-import type { CourseSort } from '@/entities/course/model/hooks';
-import type { Course } from '@/entities/course/model/types';
+import { useEffect, useMemo, useRef } from 'react';
+
+import type { Course, CourseSort } from '@/entities/course/model';
 import type { Role } from '@/shared/lib/auth';
 import { cn } from '@/shared/lib/classnames';
 import { snackbar } from '@/shared/ui';
 import {
-  useCourseListQuery,
+  useCourseList,
   useCourseSelection,
   useEnrollSelectedCourses,
   useInfiniteScroll,
 } from '@/views/course-list/model/hooks';
-import { useEffect, useMemo, useRef } from 'react';
-import { CourseCheckoutBar } from './CourseCheckoutBar';
-import { CourseListFooter } from './CourseListFooter';
-import { CourseListItem } from './CourseListItem';
-import { CourseListStatus } from './CourseListStatus';
+
+import { CourseCheckoutBar, CourseListFooter, CourseListItem, CourseListStatus } from './';
 
 const PENDING_ENROLL_STORAGE_KEY = 'lecture_pending_enroll';
 
@@ -24,9 +22,11 @@ function readPendingSelectedIds(): number[] {
     const raw = sessionStorage.getItem(PENDING_ENROLL_STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw) as unknown;
-    const ids = (parsed && typeof parsed === 'object' && 'selectedIds' in parsed ? (parsed as any).selectedIds : []) as
-      | unknown
-      | unknown[];
+    const ids = (
+      parsed && typeof parsed === 'object' && 'selectedIds' in parsed
+        ? (parsed as { selectedIds: unknown[] }).selectedIds
+        : []
+    ) as unknown | unknown[];
     if (!Array.isArray(ids)) return [];
     return ids.filter((x) => typeof x === 'number' && Number.isFinite(x));
   } catch {
@@ -37,7 +37,7 @@ function readPendingSelectedIds(): number[] {
 export function CourseList({ role, sort }: { role: Role | null; sort: CourseSort }) {
   const sentinelRef = useRef<HTMLDivElement | null>(null);
 
-  const query = useCourseListQuery({ sort, size: 10 });
+  const query = useCourseList({ sort, size: 10 });
   const initialSelectedIds = useMemo(() => readPendingSelectedIds(), []);
   const selection = useCourseSelection(query.courses, initialSelectedIds);
   const showCheckoutSticky = selection.selectedIds.length > 0;
@@ -46,12 +46,11 @@ export function CourseList({ role, sort }: { role: Role | null; sort: CourseSort
   const fullCourseIdSet = useMemo(() => {
     const ids: number[] = [];
     for (const c of query.courses) {
-      const isFull =
-        typeof c.isFull === 'boolean'
-          ? c.isFull
-          : typeof c.availableSeats === 'number'
-            ? c.availableSeats <= 0
-            : c.currentStudents >= c.maxStudents;
+      const isFull = (() => {
+        if (typeof c.isFull === 'boolean') return c.isFull;
+        if (typeof c.availableSeats === 'number') return c.availableSeats <= 0;
+        return c.currentStudents >= c.maxStudents;
+      })();
       if (isFull) ids.push(c.id);
     }
     return new Set(ids);
@@ -100,8 +99,6 @@ export function CourseList({ role, sort }: { role: Role | null; sort: CourseSort
     enroll.isPending || query.isPending || query.isFetchingNextPage || selection.selectedIds.length === 0;
 
   useEffect(() => {
-    // 결제바 높이가 변해도 스낵바 위치가 흔들리지 않도록, "버튼 위"에 뜨는 고정 offset만 적용합니다.
-    // (버튼 h-11(44px) + 바 padding/여백을 고려한 값)
     const FIXED_SNACKBAR_OFFSET_PX = 96;
 
     if (!showCheckoutSticky) {
@@ -122,7 +119,7 @@ export function CourseList({ role, sort }: { role: Role | null; sort: CourseSort
 
       {query.hasCourses && (
         <>
-          <div className="grid gap-3">
+          <div className="grid auto-rows-fr gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {query.courses.map((course) => {
               const isFull = fullCourseIdSet.has(course.id);
               const onToggle = isFull ? undefined : () => selection.toggle(course.id);

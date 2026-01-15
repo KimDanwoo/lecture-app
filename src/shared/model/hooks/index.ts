@@ -1,2 +1,1 @@
-export { useSnackbarController } from './useSnackbarController';
-
+export * from './useSnackbarController';

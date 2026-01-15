@@ -1,12 +1,13 @@
 'use client';
 
-import { useEnrollBatchMutation } from '@/entities/enrollment/model/hooks';
-import { HttpError } from '@/shared/api/http';
-import { ROUTES } from '@/shared/config';
-import type { Role } from '@/shared/lib/auth';
-import { snackbar } from '@/shared/ui';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+
+import { useEnrollBatchMutation } from '@/entities/enrollment/model/services';
+import { HttpError } from '@/shared/api';
+import { ROUTES } from '@/shared/config';
+import type { Role } from '@/shared/lib/auth/model/types';
+import { snackbar } from '@/shared/ui';
 
 const PENDING_ENROLL_STORAGE_KEY = 'lecture_pending_enroll';
 
@@ -30,14 +31,10 @@ export function useEnrollSelectedCourses(input: { role: Role | null; selectedIds
 
   async function enroll() {
     if (!role) {
-      // 로그인 후에도 선택 상태를 복원하기 위해, 신청 시점의 선택값을 1회성으로 저장합니다.
-      try {
-        sessionStorage.setItem(PENDING_ENROLL_STORAGE_KEY, JSON.stringify({ selectedIds }));
-      } catch {
-        // ignore
-      }
+      sessionStorage.setItem(PENDING_ENROLL_STORAGE_KEY, JSON.stringify({ selectedIds }));
 
-      const returnTo = typeof window !== 'undefined' ? `${window.location.pathname}${window.location.search}` : ROUTES.HOME;
+      const returnTo =
+        typeof window !== 'undefined' ? `${window.location.pathname}${window.location.search}` : ROUTES.HOME;
       const qs = new URLSearchParams({ reason: 'enroll_required', returnTo });
       router.push(`${ROUTES.LOGIN}?${qs.toString()}`);
       return;
@@ -68,12 +65,11 @@ export function useEnrollSelectedCourses(input: { role: Role | null; selectedIds
         for (const item of result.failed) {
           const id = (item?.courseId ?? item?.id) as unknown;
           if (typeof id !== 'number' || !Number.isFinite(id)) continue;
-          const detail =
-            typeof item?.message === 'string'
-              ? item.message
-              : typeof item?.reason === 'string'
-                ? item.reason
-                : '신청에 실패했습니다.';
+          const detail = (() => {
+            if (typeof item?.message === 'string') return item.message;
+            if (typeof item?.reason === 'string') return item.reason;
+            return '신청에 실패했습니다.';
+          })();
           nextOutcomes[id] = { status: 'error', message: detail };
         }
       }

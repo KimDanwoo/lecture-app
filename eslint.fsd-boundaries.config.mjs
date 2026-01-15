@@ -1,9 +1,6 @@
 import { fixupConfigRules } from '@eslint/compat';
-import nextPlugin from '@next/eslint-plugin-next';
-import typescriptPlugin from '@typescript-eslint/eslint-plugin';
 import typescriptParser from '@typescript-eslint/parser';
 import boundaries from 'eslint-plugin-boundaries';
-import importPlugin from 'eslint-plugin-import';
 
 const fsdBoundariesConfig = [
   {
@@ -11,9 +8,6 @@ const fsdBoundariesConfig = [
   },
   {
     files: ['**/*.tsx'],
-    plugins: {
-      '@next/next': nextPlugin,
-    },
     rules: {
       '@next/next/no-img-element': 'warn',
       '@next/next/no-html-link-for-pages': 'warn',
@@ -31,9 +25,6 @@ const fsdBoundariesConfig = [
     },
     plugins: {
       boundaries,
-      import: importPlugin,
-      '@typescript-eslint': typescriptPlugin,
-      '@next/next': nextPlugin,
     },
     settings: {
       'boundaries/elements': [
@@ -65,11 +56,11 @@ const fsdBoundariesConfig = [
               from: 'app',
               allow: ['app', 'views', 'widgets', 'features', 'entities', 'shared'],
             },
-              { from: 'views', allow: ['views', 'widgets', 'features', 'entities', 'shared'] },
-              { from: 'widgets', allow: ['widgets', 'features', 'entities', 'shared'] },
-              { from: 'features', allow: ['features', 'entities', 'shared'] },
-              { from: 'entities', allow: ['entities', 'shared'] },
-              { from: 'shared', allow: ['shared'] },
+            { from: 'views', allow: ['views', 'widgets', 'features', 'entities', 'shared'] },
+            { from: 'widgets', allow: ['widgets', 'features', 'entities', 'shared'] },
+            { from: 'features', allow: ['features', 'entities', 'shared'] },
+            { from: 'entities', allow: ['entities', 'shared'] },
+            { from: 'shared', allow: ['shared'] },
           ],
         },
       ],
