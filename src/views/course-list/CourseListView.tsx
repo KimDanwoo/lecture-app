@@ -6,6 +6,7 @@ import { getAuthFromCookies } from '@/shared/lib/auth/utils';
 import { cn } from '@/shared/lib/classnames';
 import { getRequestOrigin } from '@/shared/lib/next';
 import { ReactQueryHydrate } from '@/shared/lib/react-query';
+import { COURSE_LIST_PAGE_SIZE, COURSE_LIST_STICKY_TOP_PX } from '@/views/course-list/model/constants';
 import { toCourseListSort } from '@/views/course-list/model/types';
 import { CourseList, CourseSortOptions } from '@/views/course-list/ui';
 
@@ -25,7 +26,7 @@ export async function CourseListView({ searchParams }: { searchParams?: Promise<
     queryClient,
     origin,
     cookie,
-    size: 10,
+    size: COURSE_LIST_PAGE_SIZE,
     sort,
   });
 
@@ -34,9 +35,10 @@ export async function CourseListView({ searchParams }: { searchParams?: Promise<
   return (
     <section className="grid gap-4" aria-label="강의 목록">
       <div
+        style={{ top: COURSE_LIST_STICKY_TOP_PX }}
         className={cn(
           '-mx-4 px-4 pb-4 sm:-mx-6 sm:px-6',
-          'sticky top-[84px] sm:top-[84px] z-40',
+          'sticky z-40',
           'border-b border-black/10 bg-zinc-50/90 backdrop-blur dark:border-white/15 dark:bg-black/70',
         )}
       >

@@ -1,0 +1,3 @@
+export const COURSE_LIST_PAGE_SIZE = 10;
+export const COURSE_LIST_STICKY_TOP_PX = 84;
+export const CHECKOUT_SNACKBAR_OFFSET_PX = 96;

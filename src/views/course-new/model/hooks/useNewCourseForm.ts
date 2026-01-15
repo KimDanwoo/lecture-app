@@ -1,12 +1,12 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 
 import { useCreateCourseMutation } from '@/entities/course/model/services';
 import { useUserStore, type UserInfo } from '@/features/auth/model/store';
 import { HttpError } from '@/shared/api';
 import { useErrorReporter } from '@/shared/lib/error';
+import { useFormFields } from '@/shared/model/hooks';
 import { snackbar } from '@/shared/ui';
 import type { NewCourseFormValues } from '@/views/course-new/model/types';
 
@@ -16,16 +16,12 @@ export function useNewCourseForm() {
   const user = useUserStore((s: { user: UserInfo | null }) => s.user);
   const createCourseMutation = useCreateCourseMutation();
 
-  const [values, setValues] = useState<NewCourseFormValues>({
+  const { values, setField } = useFormFields<NewCourseFormValues>({
     title: '',
     description: '',
     maxStudents: 30,
     price: 0,
   });
-
-  function setField<K extends keyof NewCourseFormValues>(key: K, value: NewCourseFormValues[K]) {
-    setValues((prev) => ({ ...prev, [key]: value }));
-  }
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();

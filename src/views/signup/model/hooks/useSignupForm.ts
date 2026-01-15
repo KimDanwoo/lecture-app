@@ -1,7 +1,6 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 
 import { useSignupMutation } from '@/features/auth/model/services';
 import { HttpError } from '@/shared/api';
@@ -9,6 +8,7 @@ import { ROUTES } from '@/shared/config';
 import { AUTH_ROLES } from '@/shared/lib/auth/model/constants';
 import type { Role } from '@/shared/lib/auth/model/types';
 import { useErrorReporter } from '@/shared/lib/error';
+import { useFormFields } from '@/shared/model/hooks';
 import { snackbar } from '@/shared/ui';
 import type { SignupFormValues } from '@/views/signup/model/types';
 
@@ -17,7 +17,7 @@ export function useSignupForm() {
   const { reportError } = useErrorReporter();
   const signupMutation = useSignupMutation();
 
-  const [values, setValues] = useState<SignupFormValues>({
+  const { values, setField } = useFormFields<SignupFormValues>({
     role: AUTH_ROLES.STUDENT,
     email: '',
     password: '',
@@ -25,10 +25,6 @@ export function useSignupForm() {
     name: '',
     phone: '',
   });
-
-  function setField<K extends keyof SignupFormValues>(key: K, value: SignupFormValues[K]) {
-    setValues((prev) => ({ ...prev, [key]: value }));
-  }
 
   function setRole(role: Role) {
     setField('role', role);

@@ -8,8 +8,7 @@ import { HttpError } from '@/shared/api';
 import { ROUTES } from '@/shared/config';
 import type { Role } from '@/shared/lib/auth/model/types';
 import { snackbar } from '@/shared/ui';
-
-const PENDING_ENROLL_STORAGE_KEY = 'lecture_pending_enroll';
+import { writePendingEnrollSelection } from '@/views/course-list/model/utils';
 
 type EnrollOutcome = {
   status: 'success' | 'error';
@@ -31,7 +30,7 @@ export function useEnrollSelectedCourses(input: { role: Role | null; selectedIds
 
   async function enroll() {
     if (!role) {
-      sessionStorage.setItem(PENDING_ENROLL_STORAGE_KEY, JSON.stringify({ selectedIds }));
+      writePendingEnrollSelection(selectedIds);
 
       const returnTo =
         typeof window !== 'undefined' ? `${window.location.pathname}${window.location.search}` : ROUTES.HOME;

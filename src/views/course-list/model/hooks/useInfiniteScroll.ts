@@ -2,15 +2,24 @@
 
 import { useEffect } from 'react';
 
+const DEFAULT_INFINITE_SCROLL_ROOT_MARGIN = '200px';
+
 export function useInfiniteScroll(input: {
   sentinelRef: React.RefObject<HTMLDivElement | null>;
   enabled: boolean;
   hasNextPage: boolean;
   isFetchingNextPage: boolean;
-  fetchNextPage: () => Promise<unknown>;
+  fetchNextPageAction: () => Promise<unknown>;
   rootMargin?: string;
 }) {
-  const { sentinelRef, enabled, hasNextPage, isFetchingNextPage, fetchNextPage, rootMargin = '200px' } = input;
+  const {
+    sentinelRef,
+    enabled,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPageAction,
+    rootMargin = DEFAULT_INFINITE_SCROLL_ROOT_MARGIN,
+  } = input;
 
   useEffect(() => {
     if (!enabled) return;
@@ -24,7 +33,7 @@ export function useInfiniteScroll(input: {
         if (!entry?.isIntersecting) return;
         if (!hasNextPage) return;
         if (isFetchingNextPage) return;
-        void fetchNextPage();
+        void fetchNextPageAction();
       },
       { rootMargin },
     );
@@ -33,6 +42,5 @@ export function useInfiniteScroll(input: {
     return () => {
       void observer.disconnect();
     };
-  }, [enabled, fetchNextPage, hasNextPage, isFetchingNextPage, rootMargin, sentinelRef]);
+  }, [enabled, fetchNextPageAction, hasNextPage, isFetchingNextPage, rootMargin, sentinelRef]);
 }
-
